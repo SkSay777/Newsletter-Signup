@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require("request");
@@ -5,6 +6,7 @@ const https = require('https');
 const { response } = require('express');
 
 const app = express();
+console.log("token", process.env.API_Key);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -33,11 +35,11 @@ app.post('/',function(req,res){
     };
     var jsonData = JSON.stringify(data)
 
-    const url='https://us13.api.mailchimp.com/3.0/lists/ba092fba8b'
+    const url='https://us13.api.mailchimp.com/3.0/lists/'+process.env.Audience_ID
 
     const options ={
         method: "POST",
-        auth:"SK:2f4b1da3a944826f0ff61b63c03499aa-us13"
+        auth:"SK:"+ process.env.API_Key
     }
 
     const request= https.request(url, options, function(response){
@@ -66,10 +68,3 @@ app.listen(3000, function () {
     console.log("Server 3000 running");
 })
 
-// API Key
-// c195fdf82001dad36989f4e13b6acf07-us13
-// 403b2c40d1a122a2678de8f957dacb1c-us13
-//2f4b1da3a944826f0ff61b63c03499aa-us13
-
-//Audience ID
-// ba092fba8b
